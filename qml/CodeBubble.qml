@@ -15,12 +15,28 @@ EntityBase {
         source: "../assets/codeBubble.png"
     }
 
+    CircleCollider {
+        radius: sprite.width/2
+
+        fixture.onBeginContact: {
+            removeEntity();
+            gameScene.miss++;
+
+        }
+    }
+
     MouseArea {
         id:mouseArea
         anchors.fill: parent
         onClicked: {
             removeEntity();
+            gameScene.score++;
         }
+    }
+
+    Component.onCompleted: {
+         x = utils.generateRandomValueBetween(0,gameScene.width-sprite.width)
+         y = 0
     }
 
 }
