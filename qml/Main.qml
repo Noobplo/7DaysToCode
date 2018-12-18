@@ -6,7 +6,7 @@ GameWindow {
 
 
 
-    activeScene: gamesScene
+    activeScene: gameScene
 
     screenWidth: 960
     screenHeight: 640
@@ -14,11 +14,23 @@ GameWindow {
     Scene {
         id: gameScene
 
-
         width: 480
         height: 320
+
+        property alias clickBubbleSound: clickBubbleSound
+        property alias missBubbleSound: missBubbleSound
+
+        property int bubbleSize: 50
+        property int fallSpeed: 2
+        property int spawnfq: 1000
+        property int clickAreaSize: 50
+
         property int score: 0
         property int miss: 0
+
+        SoundEffectVPlay {id:clickBubbleSound; source:"../assets/320655__rhodesmas__level-up-01.wav"}
+        SoundEffectVPlay {id:missBubbleSound; source:"../assets/WINDOWS_XP_ERROR_SOUND.wav"}
+
 
         Rectangle {
             id: background
@@ -27,12 +39,20 @@ GameWindow {
         }
 
         Rectangle {
-            id: line
+            id: clickableArea
             width: parent.gameWindowAnchorItem.width
-            height: 10
+            height: gameScene.clickAreaSize
             anchors.horizontalCenter: parent.gameWindowAnchorItem.horizontalCenter
-            y: parent.gameWindowAnchorItem.height-parent.gameWindowAnchorItem.height*0.1
+            y: parent.gameWindowAnchorItem.height*0.7
             color: "white"
+
+            BoxCollider {
+                categories: Box.Category2
+                collisionTestingOnlyMode: true
+                anchors.fill: parent
+
+
+            }
 
         }
 
@@ -55,11 +75,11 @@ GameWindow {
             entityContainer: gameScene
         }
 
-        PhysicsWorld { gravity.y: 5; z: 1 }
+        PhysicsWorld { gravity.y: gameScene.fallSpeed; z: 1 }
 
         Timer {
             id: spawnBubble
-            interval: 1000
+            interval: gameScene.spawnfq
             running: true
             repeat: true
             onTriggered: {
@@ -77,8 +97,11 @@ GameWindow {
             anchors.top: parent.gameWindowAnchorItem.bottom
 
             BoxCollider {
+                categories: Box.Category1
                 collisionTestingOnlyMode: true
                 anchors.fill: parent
+
+
             }
         }
 
