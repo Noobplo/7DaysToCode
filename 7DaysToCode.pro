@@ -53,4 +53,8 @@ macx {
 DISTFILES += \
     qml/CodeBubble.qml \
     qml/GameScene.qml \
-    qml/RedBullCan.qml
+    qml/RedBullCan.qml \
+    qml/StartScene.qml \
+    qml/CreditsScene.qml \
+    qml/NightScene.qml \
+    qml/ChangeSceneButton.qml

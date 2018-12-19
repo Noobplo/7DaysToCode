@@ -5,6 +5,8 @@ import QtQuick 2.0
 Scene {
 
     id: gameScene
+    visible: false
+    enabled: visible
 
     width: 480
     height: 320
@@ -16,6 +18,8 @@ Scene {
     property alias missBubbleSound: missBubbleSound
     property alias redBullSound: redBullSound
     property alias comboSound: comboSound
+    property alias startDaySound: startDaySound
+    property alias endDaySound: endDaySound
 
     property int bubbleSize: 50
     property int fallSpeed: 2
@@ -45,6 +49,8 @@ Scene {
     SoundEffectVPlay {id:missBubbleSound; source:"../assets/sounds/WINDOWS_XP_ERROR_SOUND.wav"}
     SoundEffectVPlay {id:redBullSound; source:"../assets/sounds/Soda-can-opening-sound-effect.wav"}
     SoundEffectVPlay {id:comboSound; source:"../assets/sounds/Wombo_Combo_Sound_Effect.wav"}
+    SoundEffectVPlay {id:startDaySound; source:"../assets/sounds/Microsoft_Windows_XP_Startup_Sound.wav"}
+    SoundEffectVPlay {id:endDaySound; source:"../assets/sounds/Microsoft_Windows_XP_Shutdown_Sound.wav"}
 
 
     //background
@@ -147,6 +153,7 @@ Scene {
         MouseArea {
             anchors.fill: parent
             onClicked: {
+                gameScene.startDaySound.play()
                 gameScene.gameRunning=true
                 parent.visible=false
 
@@ -215,12 +222,24 @@ Scene {
     }
 
     function checkGameOver() {
-        if(gameScene.energy<=0||gameScene.motivation<=0) {
+        if(gameScene.energy<=0||gameScene.motivation<=0||gameWindow.progress>=gameWindow.maxProgress) {
             entityManager.removeAllEntities()
             gameScene.energy=gameScene.startEnergy
             gameScene.motivation=gameScene.startMotivation
+            comboReset(false)
             gameScene.gameRunning=false
             gameScene.startButton.visible=true
+            gameScene.endDaySound.play()
+            if(gameWindow.currentDay<gameWindow.daysLeft&&gameWindow.progress<gameWindow.maxProgress) {
+                gameWindow.currentDay++
+                gameWindow.state="night"
+            }
+            else {
+                gameWindow.gameEnding=true
+                gameWindow.state="credits"
+            }
+
+
         }
     }
 

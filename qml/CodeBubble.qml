@@ -65,7 +65,7 @@ EntityBase {
             clickBubbleSound.play()
             removeEntity();
             gameWindow.score++;
-            gameWindow.progress+=0.1
+            gameWindow.progress+=0.2
             gameScene.energy-=gameScene.energyConPerClick
             gameScene.hitCount++
             if(gameScene.hitCount>=gameScene.combo)
