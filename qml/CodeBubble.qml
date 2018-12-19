@@ -14,6 +14,9 @@ EntityBase {
 
     MultiResolutionImage {
         id: sprite
+
+        width: parent.width
+        height: parent.height
         source: "../assets/codeBubble.png"
     }
 

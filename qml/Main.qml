@@ -17,12 +17,15 @@ GameWindow {
         width: 480
         height: 320
 
+        property bool gameRunning: false
+        property alias startButton: startButton
+
         property alias clickBubbleSound: clickBubbleSound
         property alias missBubbleSound: missBubbleSound
 
         property int bubbleSize: 50
         property int fallSpeed: 2
-        property int spawnfq: 1000
+        property int spawnfq: 500
         property int clickAreaSize: 50
 
         property int score: 0
@@ -70,6 +73,29 @@ GameWindow {
             anchors.top: parent.gameWindowAnchorItem.top
         }
 
+        Rectangle {
+            id: startButton
+            width: 80
+            height: 50
+            anchors.centerIn: parent
+            color: "white"
+
+            Text {
+                text: "Start"
+                color: "grey"
+                anchors.centerIn: parent
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    gameScene.gameRunning=true
+                    parent.visible=false
+
+                }
+            }
+        }
+
         EntityManager {
             id: entityManager
             entityContainer: gameScene
@@ -80,11 +106,19 @@ GameWindow {
         Timer {
             id: spawnBubble
             interval: gameScene.spawnfq
-            running: true
+            running: parent.gameRunning
             repeat: true
             onTriggered: {
                 entityManager.createEntityFromUrl(Qt.resolvedUrl("CodeBubble.qml"))
+            }
+        }
 
+        Timer {
+            id: gameTimer
+            running: parent.gameRunning
+            repeat: true
+            onTriggered: {
+                gameScene.checkGameOver()
 
             }
         }
@@ -102,6 +136,16 @@ GameWindow {
                 anchors.fill: parent
 
 
+            }
+        }
+
+        function checkGameOver() {
+            if(gameScene.miss>=20) {
+                entityManager.removeAllEntities()
+                gameScene.miss=0
+                gameScene.score=0
+                gameScene.gameRunning=false
+                gameScene.startButton.visible=true
             }
         }
 
