@@ -24,14 +24,13 @@ Scene {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "It is Night time... \n Your progress so far: "+ Math.round(gameWindow.progress)+"%"
             color: "white"
+            font.family: gameWindow.pixelFont.name
         }
 
         ChangeSceneButton {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Start next Day"
             textColor: "black"
-            color: "white"
-
             onClicked: gamePressed()
         }
     }

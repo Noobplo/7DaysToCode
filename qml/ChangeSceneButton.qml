@@ -8,7 +8,6 @@ Item {
     signal clicked
 
     property alias text: buttonText.text
-    property alias color: background.color
     property alias textColor: buttonText.color
 
     property alias clickSound: clickSound
@@ -17,16 +16,21 @@ Item {
     width: buttonText.width+10
     height: buttonText.height+10
 
-    // button background
-    Rectangle {
+    // button image
+    MultiResolutionImage {
         id: background
         anchors.fill: parent
+
+        width: parent.width
+        height: parent.height
+        source: "../assets/images/pixelBorder"
     }
 
     // button text
     Text {
         id: buttonText
         anchors.centerIn: background
+        font.family: gameWindow.pixelFont.name
     }
 
     // mouse area to handle click events

@@ -11,6 +11,9 @@ Scene {
 
     signal menuPressed()
 
+    property string text: ""
+
+
     Rectangle {
         id: background
         anchors.fill: parent.gameWindowAnchorItem
@@ -22,37 +25,29 @@ Scene {
 
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
-            text: creditsScene.generateResultText()
+            text: creditsScene.text
             color: "white"
+            font.family: gameWindow.pixelFont.name
         }
 
         ChangeSceneButton {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Back to Menu"
             textColor: "black"
-            color: "white"
-
             onClicked: menuPressed()
         }
     }
 
     function generateResultText() {
-        var text=""
-        if(gameWindow.gameEnding) {
+        if(gameWindow.progress>=100) {
+            text="You have made it! Thx for playing \n Code Pieces clicked: "+gameWindow.score+"\n Code Pieces missed: "+gameWindow.miss+"\n Combos made: "+gameWindow.comboCount
 
-            if(gameWindow.progress>=100) {
-                text="You have made it! Thx for playing "
-            }
-            else {
-                text="Ouch....Wanna try again? "
-            }
-            text+="\n Code Pieces clicked: "+gameWindow.score
-            text+="\n Code Pieces missed: "+gameWindow.miss
-            text+="\n Combos made: "+gameWindow.comboCount
-            gameWindow.resetGame()
+        }
+        else {
+            text="Ouch....Wanna try again? \n Code Pieces clicked: "+gameWindow.score+"\n Code Pieces missed: "+gameWindow.miss+"\n Combos made: "+gameWindow.comboCount
+
         }
 
-        return text
     }
 
 

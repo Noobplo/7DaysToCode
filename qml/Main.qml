@@ -23,8 +23,11 @@ GameWindow {
 
     property int currentDay: 1
 
-    //Credits Scene will generate a result text as soon game has ended
-    property bool gameEnding: false
+    property alias pixelFont: pixelFont
+    FontLoader {
+        id: pixelFont
+        source: "../assets/arcadeclassic_regular.ttf"
+    }
 
     GameScene {
         id: gameScene
@@ -77,7 +80,6 @@ GameWindow {
         miss=0
         comboCount=0
         currentDay=1
-        gameEnding=false
 
     }
 

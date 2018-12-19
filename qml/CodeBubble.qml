@@ -14,15 +14,15 @@ EntityBase {
 
 
     MultiResolutionImage {
-        id: sprite
+        id: spriteCodeBubble
 
         width: parent.width
         height: parent.height
-        source: "../assets/images/codeBubble.png"
+        source: "../assets/images/pixelCode.png"
     }
 
     CircleCollider {
-        radius: sprite.width/2
+        radius: spriteCodeBubble.width/2
 
         categories: Circle.Category3
 
@@ -80,7 +80,7 @@ EntityBase {
 
     //where this entity should be created
     Component.onCompleted: {
-         x = utils.generateRandomValueBetween(0,gameScene.width-sprite.width)
+         x = utils.generateRandomValueBetween(0,gameScene.width-spriteCodeBubble.width)
          y = -gameScene.bubbleSize
     }
 

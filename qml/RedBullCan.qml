@@ -16,11 +16,11 @@ EntityBase {
     z: 2
 
     MultiResolutionImage {
-        id: sprite
+        id: spriteRedBull
 
         width: parent.width
         height: parent.height
-        source: "../assets/images/red-bull-png-more-views-600.png"
+        source: "../assets/images/pixelRedBull.png"
     }
 
     MouseArea {
@@ -39,7 +39,6 @@ EntityBase {
         repeat: true
         onTriggered: {
             lifespan--
-            console.log("its alive!!")
             if(lifespan<=0)
             {
                 removeEntity();
@@ -48,8 +47,8 @@ EntityBase {
     }
 
     Component.onCompleted: {
-        x = utils.generateRandomValueBetween(0,gameScene.width-sprite.width)
-        y = utils.generateRandomValueBetween(50+sprite.height,gameScene.height*0.7-sprite.height)
+        x = utils.generateRandomValueBetween(0,gameScene.width-spriteRedBull.width)
+        y = utils.generateRandomValueBetween(50+spriteRedBull.height,gameScene.height*0.7-spriteRedBull.height)
         spawned=true
 
     }

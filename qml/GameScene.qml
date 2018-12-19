@@ -21,8 +21,8 @@ Scene {
     property alias startDaySound: startDaySound
     property alias endDaySound: endDaySound
 
-    property int bubbleSize: 50
-    property int fallSpeed: 2
+    property int bubbleSize: 60
+    property int fallSpeed: 1
     property int spawnInt: 500
     property int clickAreaSize: 50
     property int redBullSpawnInt: 5000
@@ -57,49 +57,56 @@ Scene {
     Rectangle {
         id: background
         anchors.fill: parent.gameWindowAnchorItem
-        color: "grey"
+        MultiResolutionImage {
+            id: backgroundImage
+
+            width: parent.width
+            height: parent.height
+            source: "../assets/images/windows-xp_pixelBackground.jpg"
+        }
     }
 
     //HUD
-    Rectangle {
+    MultiResolutionImage {
         width: parent.gameWindowAnchorItem.width
         anchors.horizontalCenter: parent.gameWindowAnchorItem.horizontalCenter
         anchors.top: parent.gameWindowAnchorItem.top
         height: 50
         //HUD is always on the front
         z: 3
-        color: "black"
-
         Row {
             id: hud
             anchors.horizontalCenter: parent.Center
             x: 10
             spacing: 5
             Column {
-                y: 3
+                y: 4
                 Text {
                     text: "Progress: "+Math.round(gameWindow.progress)+"%"
-                    color: "green"
-                    font.pixelSize: 10
+                    color: "lightgreen"
+                    font.pixelSize: 11
+                    font.family: gameWindow.pixelFont.name
                 }
                 Text {
-                    text: "Energy: "+gameScene.energy
+                    text: "Energy: "+gameScene.energy+"%"
                     color: "yellow"
-                    font.pixelSize: 10
+                    font.pixelSize: 11
+                    font.family: gameWindow.pixelFont.name
                 }
                 Text {
-                    text: "Motivation: "+gameScene.motivation
+                    text: "Motivation: "+gameScene.motivation+"%"
                     color: "purple"
-                    font.pixelSize: 10
+                    font.pixelSize: 11
+                    font.family: gameWindow.pixelFont.name
                 }
             }
             Column {
-                y: 3
+                y: 4
                 spacing: 5
                 Rectangle {
                     width: (350*gameWindow.progress)/100
                     height: 10
-                    color: "green"
+                    color: "lightgreen"
                 }
                 Rectangle {
                     width: (350*gameScene.energy)/100
@@ -114,7 +121,7 @@ Scene {
             }
 
         }
-
+        source: "../assets/images/pixelXPBorder"
     }
 
     //Area where the code bubbles are clickable
@@ -124,7 +131,10 @@ Scene {
         height: gameScene.clickAreaSize
         anchors.horizontalCenter: parent.gameWindowAnchorItem.horizontalCenter
         y: parent.gameWindowAnchorItem.height*0.7
-        color: "white"
+        color: "black"
+        opacity: 0.5
+        border.color: "cyan"
+        border.width: 2
 
         BoxCollider {
             categories: Box.Category2
@@ -137,17 +147,18 @@ Scene {
     }
 
     //Button to start the game
-    Rectangle {
+    MultiResolutionImage {
         id: startButton
         width: 100
         height: 50
         anchors.centerIn: parent
-        color: "white"
+        enabled: visible
 
         Text {
             text: "Start Day "+gameWindow.currentDay
-            color: "grey"
+            color: "black"
             anchors.centerIn: parent
+            font.family: gameWindow.pixelFont.name
         }
 
         MouseArea {
@@ -159,6 +170,7 @@ Scene {
 
             }
         }
+        source: "../assets/images/pixelBorder"
     }
 
     EntityManager {
@@ -230,12 +242,14 @@ Scene {
             gameScene.gameRunning=false
             gameScene.startButton.visible=true
             gameScene.endDaySound.play()
+
             if(gameWindow.currentDay<gameWindow.daysLeft&&gameWindow.progress<gameWindow.maxProgress) {
                 gameWindow.currentDay++
                 gameWindow.state="night"
             }
             else {
-                gameWindow.gameEnding=true
+                creditsScene.generateResultText()
+                gameWindow.resetGame()
                 gameWindow.state="credits"
             }
 

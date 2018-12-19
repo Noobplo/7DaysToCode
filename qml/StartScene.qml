@@ -26,6 +26,7 @@ Scene {
             text: "7 Days To Code"
             font.pixelSize: 30
             color: "white"
+            font.family: gameWindow.pixelFont.name
         }
 
         MultiResolutionImage {
@@ -41,8 +42,6 @@ Scene {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Start Game"
             textColor: "black"
-            color: "white"
-
             onClicked: gamePressed()
         }
 
