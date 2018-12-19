@@ -12,6 +12,10 @@ GameWindow {
     //achieve 100% progress to win this game, progress is made by clicking on the codeBubble in gameScene
     property double progress: 1
 
+    property int score: 0
+    property int miss: 0
+    property int comboCount: 0
+
     //days are tries you have to get your progress to 100%
     property int daysLeft: 7
 

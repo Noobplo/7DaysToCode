@@ -7,6 +7,7 @@ EntityBase {
     width: gameScene.bubbleSize
     height: gameScene.bubbleSize
 
+
     signal clicked
 
     property bool mouseEnable: false
@@ -17,7 +18,7 @@ EntityBase {
 
         width: parent.width
         height: parent.height
-        source: "../assets/codeBubble.png"
+        source: "../assets/images/codeBubble.png"
     }
 
     CircleCollider {
@@ -46,8 +47,9 @@ EntityBase {
                 //if this entity ends colliding with the death zone it would be destroyed
                 missBubbleSound.play()
                 removeEntity();
-                gameScene.miss++;
+                gameWindow.miss++;
                 gameScene.motivation-=motivationPenalityPerMiss
+                gameScene.comboReset(false)
             }
         }
 
@@ -62,9 +64,14 @@ EntityBase {
         onClicked: {
             clickBubbleSound.play()
             removeEntity();
-            gameScene.score++;
+            gameWindow.score++;
             gameWindow.progress+=0.1
             gameScene.energy-=gameScene.energyConPerClick
+            gameScene.hitCount++
+            if(gameScene.hitCount>=gameScene.combo)
+            {
+                gameScene.comboReset(true)
+            }
 
         }
 

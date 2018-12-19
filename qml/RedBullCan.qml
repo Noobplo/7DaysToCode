@@ -9,7 +9,7 @@ EntityBase {
     height: 80
 
     property int lifespan: 3
-    property int energyValue: 30
+    property int energyValue: 20
     property bool spawned: false
 
     //red bull cans should be placed in front of the code bubbles
@@ -20,7 +20,7 @@ EntityBase {
 
         width: parent.width
         height: parent.height
-        source: "../assets/red-bull-png-more-views-600.png"
+        source: "../assets/images/red-bull-png-more-views-600.png"
     }
 
     MouseArea {
@@ -29,15 +29,7 @@ EntityBase {
         onClicked: {
             redBullSound.play()
             removeEntity();
-            if(gameScene.energy<=(maxEnergy-energyValue))
-            {
-                gameScene.energy+=energyValue
-            }
-            else
-            {
-                gameScene.energy=gameScene.maxEnergy
-            }
-
+            gameScene.gainEnergy(energyValue)
 
         }
     }

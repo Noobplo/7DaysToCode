@@ -15,6 +15,7 @@ Scene {
     property alias clickBubbleSound: clickBubbleSound
     property alias missBubbleSound: missBubbleSound
     property alias redBullSound: redBullSound
+    property alias comboSound: comboSound
 
     property int bubbleSize: 50
     property int fallSpeed: 2
@@ -31,16 +32,19 @@ Scene {
     property int motivationPenalityPerMiss: 20
     property int energyConPerClick: 2
 
-    property int score: 0
-    property int miss: 0
+
 
 
     property int energy: startEnergy
     property int motivation: startMotivation
 
-    SoundEffectVPlay {id:clickBubbleSound; source:"../assets/320655__rhodesmas__level-up-01.wav"}
-    SoundEffectVPlay {id:missBubbleSound; source:"../assets/WINDOWS_XP_ERROR_SOUND.wav"}
-    SoundEffectVPlay {id:redBullSound; source:"../assets/Soda-can-opening-sound-effect.wav"}
+    property int combo: 20
+    property int hitCount: 0
+
+    SoundEffectVPlay {id:clickBubbleSound; source:"../assets/sounds/320655__rhodesmas__level-up-01.wav"}
+    SoundEffectVPlay {id:missBubbleSound; source:"../assets/sounds/WINDOWS_XP_ERROR_SOUND.wav"}
+    SoundEffectVPlay {id:redBullSound; source:"../assets/sounds/Soda-can-opening-sound-effect.wav"}
+    SoundEffectVPlay {id:comboSound; source:"../assets/sounds/Wombo_Combo_Sound_Effect.wav"}
 
 
     //background
@@ -218,6 +222,44 @@ Scene {
             gameScene.gameRunning=false
             gameScene.startButton.visible=true
         }
+    }
+
+    function gainEnergy(energyValue) {
+        if(gameScene.energy<=(maxEnergy-energyValue))
+        {
+            gameScene.energy+=energyValue
+        }
+        else
+        {
+            gameScene.energy=gameScene.maxEnergy
+        }
+
+    }
+
+    function gainMotivation(motivationValue) {
+        if(gameScene.motivation<=(maxMotivation-motivationValue))
+        {
+            gameScene.motivation+=motivationValue
+        }
+        else
+        {
+            gameScene.motivation=gameScene.maxMotivation
+        }
+
+    }
+
+    //param is bool
+    function comboReset(comboSuccess) {
+        if(comboSuccess)
+        {
+            comboSound.play()
+            gainEnergy(10)
+            gainMotivation(20)
+            gameWindow.comboCount++
+        }
+        gameScene.hitCount=0
+
+
     }
 
 
