@@ -51,4 +51,6 @@ macx {
 }
 
 DISTFILES += \
-    qml/CodeBubble.qml
+    qml/CodeBubble.qml \
+    qml/GameScene.qml \
+    qml/RedBullCan.qml

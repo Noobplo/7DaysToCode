@@ -27,25 +27,27 @@ EntityBase {
 
         collidesWith: Box.Category1 | Box.Category2
 
-
-
-        //if this entity collides with the death zone it would be destroyed and else if it collides with the clickable zone the mousearea will be enabled
         fixture.onBeginContact: {
-            if(other.categories===Box.Category1) {
-                missBubbleSound.play()
-                removeEntity();
-                gameScene.miss++;
-            }
-            else {
+            //if it collides with the clickable zone the mousearea will be enabled
+            if(other.categories===Box.Category2) {
                 parent.mouseEnable=true
             }
 
+
         }
 
-        //mousearea disabled as soon as it leaves the clickable zone
         fixture.onEndContact: {
+            //mousearea disabled as soon as it leaves the clickable zone
             if(other.categories===Box.Category2) {
                 parent.mouseEnable=false
+            }
+            else
+            {
+                //if this entity ends colliding with the death zone it would be destroyed
+                missBubbleSound.play()
+                removeEntity();
+                gameScene.miss++;
+                gameScene.motivation-=motivationPenalityPerMiss
             }
         }
 
@@ -61,6 +63,9 @@ EntityBase {
             clickBubbleSound.play()
             removeEntity();
             gameScene.score++;
+            gameWindow.progress+=0.1
+            gameScene.energy-=gameScene.energyConPerClick
+
         }
 
         enabled: parent.mouseEnable
