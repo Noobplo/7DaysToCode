@@ -3,6 +3,7 @@ import QtQuick 2.0
 
 
 Scene {
+    //every scene has a opacity of 0 by default and is not visible
     id: tutorialScene
     opacity: 0
     visible: opacity > 0
@@ -10,8 +11,7 @@ Scene {
 
     signal menuPressed
 
-
-
+    //a quick introduction to the goal of the game and tutorial
     Column {
         spacing: 5
         anchors.centerIn: parent
@@ -27,6 +27,7 @@ Scene {
             source: "../assets/images/tutorialPage.png"
 
         }
+        //by clicking the active scene will change to menu
         ChangeSceneButton {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Back"

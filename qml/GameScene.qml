@@ -4,18 +4,18 @@ import QtQuick 2.0
 
 Scene {
 
+    //every scene has a opacity of 0 by default and is not visible
     id: gameScene
     opacity: 0
     visible: opacity > 0
     enabled: visible
 
-
-    width: 480
-    height: 320
-
+    //game is not running by default
     property bool gameRunning: false
+    //game will run as soon the start button is clicked
     property alias startButton: startButton
 
+    //game soundeffects
     property alias clickBubbleSound: clickBubbleSound
     property alias missBubbleSound: missBubbleSound
     property alias redBullSound: redBullSound
@@ -24,27 +24,40 @@ Scene {
     property alias endDaySound: endDaySound
     property alias redBullSpawnSound: redBullSpawnSound
 
+    //size of the code pieces
     property int bubbleSize: 60
+    //how fast the code pieces will fall
     property int fallSpeed: 1
+    //spawn interval of code pieces
     property int spawnInt: 500
+    //height of the border where code pieces can be clicked
     property int clickAreaSize: 50
+    //spawn interval of red bull cans
     property int redBullSpawnInt: 5000
 
+    //starting value of energy and motivation on each day
     property int startEnergy: 100
     property int startMotivation: 100
 
+    //the max value of energy and motivation
     property int maxEnergy: 100
     property int maxMotivation: 100
 
+    //motivation reduction per missed code piece
     property int motivationPenalityPerMiss: 20
+    //energy consumption per clicked code piece
     property int energyConPerClick: 2
 
+    //current energy and motivation
     property int energy: startEnergy
     property int motivation: startMotivation
 
+    //clicks in a row without miss to trigger combo
     property int combo: 20
+    //current clicks in a row without miss
     property int hitCount: 0
 
+    //game soundeffects links
     SoundEffectVPlay {id:clickBubbleSound; source:"../assets/sounds/320655__rhodesmas__level-up-01.wav"}
     SoundEffectVPlay {id:missBubbleSound; source:"../assets/sounds/WINDOWS_XP_ERROR_SOUND.wav"}
     SoundEffectVPlay {id:redBullSound; source:"../assets/sounds/Soda-can-opening-sound-effect.wav"}
@@ -123,7 +136,7 @@ Scene {
         source: "../assets/images/pixelXPBorder"
     }
 
-    //Area where the code bubbles are clickable
+    //Area where the code pieces are clickable
     Rectangle {
         id: clickableArea
         width: parent.gameWindowAnchorItem.width
@@ -142,7 +155,7 @@ Scene {
         }
     }
 
-    //Button to start the game
+    //Button to start the game, will be disabled after clicking
     MultiResolutionImage {
         id: startButton
         width: 100
@@ -168,16 +181,16 @@ Scene {
         }
         source: "../assets/images/pixelBorder"
     }
-
+    // used to create code pieces and red bull cans at runtime
     EntityManager {
         id: entityManager
         entityContainer: gameScene
     }
 
-    //gravity for code bubbles so they can fall down
+    //gravity for code pieces so they can fall down
     PhysicsWorld { gravity.y: gameScene.fallSpeed; z: 1 }
 
-    //code bubbles will spawn at given interval
+    //code pieces will spawn at given interval
     Timer {
         id: spawnBubble
         interval: gameScene.spawnInt
@@ -188,6 +201,7 @@ Scene {
         }
     }
 
+    //red bull cans will spawn at given interval
     Timer {
         id: spawnRedBull
         interval: gameScene.redBullSpawnInt
@@ -203,6 +217,7 @@ Scene {
         }
     }
 
+    //Listener for game over
     Timer {
         id: gameTimer
         interval: 1
@@ -213,6 +228,7 @@ Scene {
         }
     }
 
+    //death zone: code pieces will be removed when they hit this area, it is located below the game window
     Rectangle {
         id: deathZone
         width: parent.gameWindowAnchorItem.width
@@ -227,6 +243,7 @@ Scene {
         }
     }
 
+    //skip to night scene if energy/motivation hits 0 or skip to credits scene if the last day passed or progress hits 100%
     function checkGameOver() {
         if(gameScene.energy<=0||gameScene.motivation<=0||gameWindow.progress>=gameWindow.maxProgress) {
             entityManager.removeAllEntities()
@@ -249,6 +266,7 @@ Scene {
         }
     }
 
+    //function to increase energy
     function gainEnergy(energyValue) {
         if(gameScene.energy<=(maxEnergy-energyValue)) {
             gameScene.energy+=energyValue
@@ -258,6 +276,7 @@ Scene {
         }
     }
 
+    //function to increase motivation
     function gainMotivation(motivationValue) {
         if(gameScene.motivation<=(maxMotivation-motivationValue)) {
             gameScene.motivation+=motivationValue
@@ -267,7 +286,8 @@ Scene {
         }
     }
 
-    //param is bool
+    //param is bool, clicks in a row will be reseted if a click piece is missed or combo triggered
+    //combo increases energy and motivation
     function comboReset(comboSuccess) {
         if(comboSuccess) {
             comboSound.play()
@@ -278,6 +298,7 @@ Scene {
         gameScene.hitCount=0
     }
 
+    //reset all game settings to the original value
     function resetGameSettings() {
         gameScene.bubbleSize= 60
         gameScene.fallSpeed= 1

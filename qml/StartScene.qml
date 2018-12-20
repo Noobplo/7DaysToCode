@@ -5,6 +5,7 @@ import QtQuick 2.0
 
 Scene {
 
+    //every scene has a opacity of 0 by default and is not visible
     id: startScene
     opacity: 0
     visible: opacity > 0
@@ -13,6 +14,7 @@ Scene {
     signal gamePressed
     signal tutorialPressed
 
+    //backgrounnd music
     property alias bgMusic: bgMusic
     BackgroundMusic {id: bgMusic ; source:"../assets/music/8_Bit_Love_Happy_Fun_Game_Music_by_HeatleyBros.wav"}
 
@@ -43,6 +45,7 @@ Scene {
 
         }
 
+        //by clicking the active scene will change to game scene
         ChangeSceneButton {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Start Game"
@@ -50,6 +53,7 @@ Scene {
             onClicked: gamePressed()
         }
 
+        //by clicking the active scene will change to tutorial
         ChangeSceneButton {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "How To Play"

@@ -5,6 +5,7 @@ import QtQuick 2.0
 
 Scene {
 
+    //every scene has a opacity of 0 by default and is not visible
     id: nightScene
     opacity: 0
     visible: opacity > 0
@@ -31,6 +32,7 @@ Scene {
             font.family: gameWindow.pixelFont.name
         }
 
+        //depending on the event that will occure on the next day a matching text will be generated
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             text: nightScene.eventText
@@ -38,6 +40,7 @@ Scene {
             font.family: gameWindow.pixelFont.name
         }
 
+        //by clicking will change the active scene to game scene
         ChangeSceneButton {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Start next Day"
@@ -46,6 +49,7 @@ Scene {
         }
     }
 
+    //called when day ends, a randomized event will take effects at the game settings on the next day
     function getRandomEvent()
     {
         gameScene.resetGameSettings()

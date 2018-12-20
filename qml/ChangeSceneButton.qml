@@ -10,9 +10,11 @@ Item {
     property alias text: buttonText.text
     property alias textColor: buttonText.color
 
+    //the sound the button will make when clicked
     property alias clickSound: clickSound
     SoundEffectVPlay {id:clickSound; source:"../assets/sounds/403018__inspectorj__ui-confirmation-alert-c5.wav"}
 
+    //button size is defined by the text
     width: buttonText.width+10
     height: buttonText.height+10
 

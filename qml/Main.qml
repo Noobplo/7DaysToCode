@@ -4,6 +4,7 @@ import QtQuick 2.0
 GameWindow {
     id: gameWindow
 
+    //default state is menu
     state: "menu"
 
     screenWidth: 960
@@ -21,14 +22,17 @@ GameWindow {
     //days are tries you have to get your progress to 100%
     property int daysLeft: 7
 
+    //game starts at day 1
     property int currentDay: 1
 
+    //this game uses a custom font
     property alias pixelFont: pixelFont
     FontLoader {
         id: pixelFont
         source: "../assets/arcadeclassic_regular.ttf"
     }
 
+    //scenes
     GameScene {
         id: gameScene
     }
@@ -54,6 +58,7 @@ GameWindow {
         onMenuPressed: {gameWindow.state="menu"}
     }
 
+    // state machine, takes care reversing the PropertyChanges when changing the state like changing the opacity back to 0
     states: [
         State {
             name: "menu"
@@ -82,6 +87,7 @@ GameWindow {
         }
     ]
 
+    //reset the game to its original settings and values
     function resetGame() {
         progress=0.1
         score=0

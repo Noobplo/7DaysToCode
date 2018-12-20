@@ -7,8 +7,8 @@ EntityBase {
     width: gameScene.bubbleSize
     height: gameScene.bubbleSize
 
+    //code pieces cant be clicked if it is not in the clickable area
     property bool mouseEnable: false
-
 
     MultiResolutionImage {
         id: spriteCodeBubble
@@ -23,6 +23,7 @@ EntityBase {
 
         categories: Circle.Category3
 
+        //it only collides with the clickable zone and the death zone
         collidesWith: Box.Category1 | Box.Category2
 
         fixture.onBeginContact: {
@@ -49,6 +50,7 @@ EntityBase {
         }
     }
 
+    //by clicking, it will be removed and alters the ingame values
     MouseArea {
         id:mouseArea
         anchors.fill: parent
