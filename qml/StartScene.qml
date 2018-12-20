@@ -16,7 +16,7 @@ Scene {
 
     //backgrounnd music
     property alias bgMusic: bgMusic
-    BackgroundMusic {id: bgMusic ; source:"../assets/music/8_Bit_Love_Happy_Fun_Game_Music_by_HeatleyBros.wav"}
+    BackgroundMusic {id: bgMusic ; source:"../assets/music/8_Bit_Love_Happy_Fun_Game_Music_by_HeatleyBros.mp3"}
 
     //background
     Rectangle {
