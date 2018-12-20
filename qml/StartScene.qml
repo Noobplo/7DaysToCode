@@ -6,10 +6,15 @@ import QtQuick 2.0
 Scene {
 
     id: startScene
-    visible: false
+    opacity: 0
+    visible: opacity > 0
     enabled: visible
 
     signal gamePressed
+    signal tutorialPressed
+
+    property alias bgMusic: bgMusic
+    BackgroundMusic {id: bgMusic ; source:"../assets/music/8_Bit_Love_Happy_Fun_Game_Music_by_HeatleyBros.wav"}
 
     //background
     Rectangle {
@@ -45,9 +50,11 @@ Scene {
             onClicked: gamePressed()
         }
 
-
+        ChangeSceneButton {
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: "How To Play"
+            textColor: "black"
+            onClicked: tutorialPressed()
+        }
     }
-
-
-
 }

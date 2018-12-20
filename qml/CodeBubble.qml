@@ -7,9 +7,6 @@ EntityBase {
     width: gameScene.bubbleSize
     height: gameScene.bubbleSize
 
-
-    signal clicked
-
     property bool mouseEnable: false
 
 
@@ -33,8 +30,6 @@ EntityBase {
             if(other.categories===Box.Category2) {
                 parent.mouseEnable=true
             }
-
-
         }
 
         fixture.onEndContact: {
@@ -52,10 +47,6 @@ EntityBase {
                 gameScene.comboReset(false)
             }
         }
-
-
-
-
     }
 
     MouseArea {
@@ -72,9 +63,7 @@ EntityBase {
             {
                 gameScene.comboReset(true)
             }
-
         }
-
         enabled: parent.mouseEnable
     }
 
@@ -83,5 +72,4 @@ EntityBase {
          x = utils.generateRandomValueBetween(0,gameScene.width-spriteCodeBubble.width)
          y = -gameScene.bubbleSize
     }
-
 }

@@ -12,7 +12,7 @@ GameWindow {
     property double maxProgress: 100
 
     //achieve 100% progress to win this game, progress is made by clicking on the codeBubble in gameScene
-    property double progress: 1
+    property double progress: 0.1
 
     property int score: 0
     property int miss: 0
@@ -35,7 +35,8 @@ GameWindow {
 
     StartScene {
         id: startScene
-        onGamePressed: gameWindow.state="game"
+        onGamePressed: {gameWindow.state="game"; startScene.bgMusic.stop()}
+        onTutorialPressed: {gameWindow.state="tutorial"}
     }
 
     NightScene {
@@ -45,46 +46,47 @@ GameWindow {
 
     CreditsScene {
         id: creditsScene
-        onMenuPressed: gameWindow.state="menu"
+        onMenuPressed: {gameWindow.state="menu"; startScene.bgMusic.play(); creditsScene.bgMusic.stop()}
     }
 
-
+    TutorialScene {
+        id:tutorialScene
+        onMenuPressed: {gameWindow.state="menu"}
+    }
 
     states: [
         State {
             name: "menu"
-            PropertyChanges {target: startScene; visible: true}
+            PropertyChanges {target: startScene; opacity: 1}
             PropertyChanges {target: gameWindow; activeScene: startScene}
         },
         State {
             name: "game"
-            PropertyChanges {target: gameScene; visible: true}
+            PropertyChanges {target: gameScene; opacity: 1}
             PropertyChanges {target: gameWindow; activeScene: gameScene}
         },
         State {
             name: "night"
-            PropertyChanges {target: nightScene; visible: true}
+            PropertyChanges {target: nightScene; opacity: 1}
             PropertyChanges {target: gameWindow; activeScene: nightScene}
         },
         State {
             name: "credits"
-            PropertyChanges {target: creditsScene; visible: true}
+            PropertyChanges {target: creditsScene; opacity: 1}
             PropertyChanges {target: gameWindow; activeScene: creditsScene}
+        },
+        State {
+            name: "tutorial"
+            PropertyChanges {target: tutorialScene; opacity: 1}
+            PropertyChanges {target: gameWindow; activeScene: tutorialScene}
         }
-
     ]
 
     function resetGame() {
-        progress=1
+        progress=0.1
         score=0
         miss=0
         comboCount=0
         currentDay=1
-
     }
-
-
-
-
-
 }

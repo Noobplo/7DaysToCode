@@ -6,10 +6,12 @@ import QtQuick 2.0
 Scene {
 
     id: nightScene
-    visible: false
+    opacity: 0
+    visible: opacity > 0
     enabled: visible
 
-    signal gamePressed()
+
+    signal gamePressed
 
     Rectangle {
         id: background
@@ -34,7 +36,4 @@ Scene {
             onClicked: gamePressed()
         }
     }
-
-
-
 }

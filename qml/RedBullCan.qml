@@ -39,8 +39,7 @@ EntityBase {
         repeat: true
         onTriggered: {
             lifespan--
-            if(lifespan<=0)
-            {
+            if(lifespan<=0) {
                 removeEntity();
             }
         }
@@ -50,7 +49,5 @@ EntityBase {
         x = utils.generateRandomValueBetween(0,gameScene.width-spriteRedBull.width)
         y = utils.generateRandomValueBetween(50+spriteRedBull.height,gameScene.height*0.7-spriteRedBull.height)
         spawned=true
-
     }
-
 }

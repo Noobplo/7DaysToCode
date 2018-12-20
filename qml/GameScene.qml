@@ -5,8 +5,10 @@ import QtQuick 2.0
 Scene {
 
     id: gameScene
-    visible: false
+    opacity: 0
+    visible: opacity > 0
     enabled: visible
+
 
     width: 480
     height: 320
@@ -35,9 +37,6 @@ Scene {
 
     property int motivationPenalityPerMiss: 20
     property int energyConPerClick: 2
-
-
-
 
     property int energy: startEnergy
     property int motivation: startMotivation
@@ -119,7 +118,6 @@ Scene {
                     color: "purple"
                 }
             }
-
         }
         source: "../assets/images/pixelXPBorder"
     }
@@ -140,10 +138,7 @@ Scene {
             categories: Box.Category2
             collisionTestingOnlyMode: true
             anchors.fill: parent
-
-
         }
-
     }
 
     //Button to start the game
@@ -200,8 +195,7 @@ Scene {
         onTriggered: {
             //there is only a 50% chance that a red bull can will spawn
             var rand=utils.generateRandomValueBetween(0,10)
-            if(rand>=5)
-            {
+            if(rand>=5) {
                 entityManager.createEntityFromUrl(Qt.resolvedUrl("RedBullCan.qml"))
             }
         }
@@ -213,7 +207,6 @@ Scene {
         repeat: true
         onTriggered: {
             gameScene.checkGameOver()
-
         }
     }
 
@@ -228,8 +221,6 @@ Scene {
             categories: Box.Category1
             collisionTestingOnlyMode: true
             anchors.fill: parent
-
-
         }
     }
 
@@ -241,59 +232,45 @@ Scene {
             comboReset(false)
             gameScene.gameRunning=false
             gameScene.startButton.visible=true
-            gameScene.endDaySound.play()
-
             if(gameWindow.currentDay<gameWindow.daysLeft&&gameWindow.progress<gameWindow.maxProgress) {
                 gameWindow.currentDay++
                 gameWindow.state="night"
+                gameScene.endDaySound.play()
             }
             else {
                 creditsScene.generateResultText()
                 gameWindow.resetGame()
                 gameWindow.state="credits"
             }
-
-
         }
     }
 
     function gainEnergy(energyValue) {
-        if(gameScene.energy<=(maxEnergy-energyValue))
-        {
+        if(gameScene.energy<=(maxEnergy-energyValue)) {
             gameScene.energy+=energyValue
         }
-        else
-        {
+        else {
             gameScene.energy=gameScene.maxEnergy
         }
-
     }
 
     function gainMotivation(motivationValue) {
-        if(gameScene.motivation<=(maxMotivation-motivationValue))
-        {
+        if(gameScene.motivation<=(maxMotivation-motivationValue)) {
             gameScene.motivation+=motivationValue
         }
-        else
-        {
+        else {
             gameScene.motivation=gameScene.maxMotivation
         }
-
     }
 
     //param is bool
     function comboReset(comboSuccess) {
-        if(comboSuccess)
-        {
+        if(comboSuccess) {
             comboSound.play()
             gainEnergy(10)
             gainMotivation(20)
             gameWindow.comboCount++
         }
         gameScene.hitCount=0
-
-
     }
-
-
 }

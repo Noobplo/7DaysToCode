@@ -43,5 +43,4 @@ Item {
             button.clicked()
         }
     }
-
 }

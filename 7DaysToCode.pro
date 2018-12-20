@@ -57,4 +57,5 @@ DISTFILES += \
     qml/StartScene.qml \
     qml/CreditsScene.qml \
     qml/NightScene.qml \
-    qml/ChangeSceneButton.qml
+    qml/ChangeSceneButton.qml \
+    qml/TutorialScene.qml
