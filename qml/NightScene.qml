@@ -67,16 +67,16 @@ Scene {
             break;
         case 2:
             gameScene.redBullSpawnInt=gameScene.redBullSpawnInt/2
-            eventText="A Red Bull truck has crushed into your flat...i guess nice? \n Red Bull cans spawnrate doubled"
+            eventText="A Red Bull truck has crushed into your flat...i guess nice? \n Red Bull cans spawnrate doubled the next day"
             break;
         case 3:
             gameScene.fallSpeed=gameScene.fallSpeed*2
-            eventText="Your asian dad called and asked if you doctor yet. The pressure is on! \n Code Pieces will fall twice as fast"
+            eventText="Your asian dad called and asked if you doctor yet. The pressure is on! \n Code Pieces will fall twice as fast the next day"
             break;
         case 4:
             gameScene.bubbleSize=gameScene.bubbleSize/2
             gameScene.clickAreaSize=gameScene.clickAreaSize/2
-            eventText="You get a headache from all the red bull consumption \n Bar and Code size are smaller"
+            eventText="You get a headache from all the red bull consumption \n Bar and Code size are smaller the next day"
             break;
         }
     }

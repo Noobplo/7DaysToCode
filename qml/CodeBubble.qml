@@ -44,7 +44,7 @@ EntityBase {
                 missBubbleSound.play()
                 removeEntity();
                 gameWindow.miss++;
-                gameScene.motivation-=motivationPenalityPerMiss
+                gameScene.motivation-=gameScene.motivationPenalityPerMiss
                 gameScene.comboReset(false)
             }
         }
