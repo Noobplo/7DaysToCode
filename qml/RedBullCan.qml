@@ -47,7 +47,7 @@ EntityBase {
 
     Component.onCompleted: {
         x = utils.generateRandomValueBetween(0,gameScene.width-spriteRedBull.width)
-        y = utils.generateRandomValueBetween(50+spriteRedBull.height,gameScene.height*0.7-spriteRedBull.height)
+        y = utils.generateRandomValueBetween(50,gameScene.height*0.7-spriteRedBull.height)
         spawned=true
     }
 }

@@ -22,6 +22,7 @@ Scene {
     property alias comboSound: comboSound
     property alias startDaySound: startDaySound
     property alias endDaySound: endDaySound
+    property alias redBullSpawnSound: redBullSpawnSound
 
     property int bubbleSize: 60
     property int fallSpeed: 1
@@ -50,7 +51,7 @@ Scene {
     SoundEffectVPlay {id:comboSound; source:"../assets/sounds/Wombo_Combo_Sound_Effect.wav"}
     SoundEffectVPlay {id:startDaySound; source:"../assets/sounds/Microsoft_Windows_XP_Startup_Sound.wav"}
     SoundEffectVPlay {id:endDaySound; source:"../assets/sounds/Microsoft_Windows_XP_Shutdown_Sound.wav"}
-
+    SoundEffectVPlay {id:redBullSpawnSound; source:"../assets/sounds/411639__inspectorj__pop-low-a-h1.wav"}
 
     //background
     Rectangle {
@@ -196,6 +197,7 @@ Scene {
             //there is only a 50% chance that a red bull can will spawn
             var rand=utils.generateRandomValueBetween(0,10)
             if(rand>=5) {
+                gameScene.redBullSpawnSound.play()
                 entityManager.createEntityFromUrl(Qt.resolvedUrl("RedBullCan.qml"))
             }
         }
@@ -203,6 +205,7 @@ Scene {
 
     Timer {
         id: gameTimer
+        interval: 1
         running: parent.gameRunning
         repeat: true
         onTriggered: {
@@ -227,8 +230,6 @@ Scene {
     function checkGameOver() {
         if(gameScene.energy<=0||gameScene.motivation<=0||gameWindow.progress>=gameWindow.maxProgress) {
             entityManager.removeAllEntities()
-            gameScene.energy=gameScene.startEnergy
-            gameScene.motivation=gameScene.startMotivation
             comboReset(false)
             gameScene.gameRunning=false
             gameScene.startButton.visible=true
@@ -236,12 +237,15 @@ Scene {
                 gameWindow.currentDay++
                 gameWindow.state="night"
                 gameScene.endDaySound.play()
+                nightScene.getRandomEvent()
             }
             else {
                 creditsScene.generateResultText()
                 gameWindow.resetGame()
                 gameWindow.state="credits"
             }
+            gameScene.energy=gameScene.startEnergy
+            gameScene.motivation=gameScene.startMotivation
         }
     }
 
@@ -272,5 +276,16 @@ Scene {
             gameWindow.comboCount++
         }
         gameScene.hitCount=0
+    }
+
+    function resetGameSettings() {
+        gameScene.bubbleSize= 60
+        gameScene.fallSpeed= 1
+        gameScene.spawnInt= 500
+        gameScene.clickAreaSize= 50
+        gameScene.redBullSpawnInt= 5000
+        gameScene.startEnergy= 100
+        gameScene.startMotivation= 100
+
     }
 }

@@ -44,12 +44,13 @@ Scene {
     function generateResultText() {
         if(gameWindow.progress>=100) {
             bgMusic.source="../assets/music/8_Bit_Win_Happy_Victorious_Game_Music_By_HeatleyBros.wav"
-            text="You have made it! Thx for playing \n Code Pieces clicked: "+gameWindow.score+"\n Code Pieces missed: "+gameWindow.miss+"\n Combos made: "+gameWindow.comboCount
+            text="Yessy! You have made it on Time! Thx for playing! \n Days Left: "+(gameWindow.daysLeft-gameWindow.currentDay)
         }
         else {
             bgMusic.source="../assets/music/8_Bit_Chillout_Chill_Dreamy_Game_Music_by_HeatleyBros.wav"
-            text="Ouch....Wanna try again? \n Code Pieces clicked: "+gameWindow.score+"\n Code Pieces missed: "+gameWindow.miss+"\n Combos made: "+gameWindow.comboCount
+            text="Ouch! You dun goofed, \n better git gud on burgerflipping at McDonalds \n Progress made: "+Math.round(gameWindow.progress)+"%"
         }
+        text+="\n Code Pieces clicked: "+gameWindow.score+"\n Code Pieces missed: "+gameWindow.miss+"\n Combos made: "+gameWindow.comboCount
         bgMusic.play()
     }
 }

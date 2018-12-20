@@ -88,5 +88,6 @@ GameWindow {
         miss=0
         comboCount=0
         currentDay=1
+        gameScene.resetGameSettings()
     }
 }
